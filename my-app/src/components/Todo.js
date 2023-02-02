@@ -1,96 +1,108 @@
-import { TbArrowBarDown } from 'react-icons/tb';
-import Listitem from "./Listitem";
-import { useEffect, useState } from "react";
+import React from "react";
+import "./Todo.css"
+
+
 
 const Todo = () => {
+  const [todos, setTodos] = React.useState([]);
+  const [todo, setTodo] = React.useState("");
+  const [todoEditing, setTodoEditing] = React.useState(null);
+  const [editingText, setEditingText] = React.useState("");
+  
 
-    const [todo, setTodo] = useState("")
-    const [allTodos, setAllTodos] = useState([])
-
-    const addTodo = (e) => {
-        e.preventDefault()
-
-        const todoItem = {
-            id: new Date().getTime(),
-            text: todo,
-            isChecked: false
-        }
-
-        if(todo !== ""){
-            setAllTodos([...allTodos].concat(todoItem).reverse())
-            setTodo("")
-        }
-
-        console.log(allTodos)
+  React.useEffect(() => {
+    const json = localStorage.getItem("todos");
+    const loadedTodos = JSON.parse(json);
+    if (loadedTodos) {
+      setTodos(loadedTodos);
     }
+  }, []);
 
-    
+  React.useEffect(() => {
+    const json = JSON.stringify(todos);
+    localStorage.setItem("todos", json);
+  }, [todos]);
 
-    const getAllTodos = () => {
-        let stored = JSON.parse(localStorage.getItem("todo"))
+  function handleSubmit(e) {
+    e.preventDefault();
 
-        if(stored) {
-            setAllTodos(stored)
-        }
-    }
+    const newTodo = {
+      id: new Date().getTime(),
+      text: todo,
+      completed: false,
+    };
+    setTodos([...todos].concat(newTodo));
+    setTodo("");
+  }
 
+  function deleteTodo(id) {
+    let updatedTodos = [...todos].filter((todo) => todo.id !== id);
+    setTodos(updatedTodos);
+  }
 
-    const toggleChecked = (id) => {
-        let updatedTodos = [...allTodos].map(todo => {
-            if(todo.id === id){
-                todo.isChecked = !todo.isChecked
-            }
+  function toggleComplete(id) {
+    let updatedTodos = [...todos].map((todo) => {
+      if (todo.id === id) {
+        todo.completed = !todo.completed;
+      }
+      return todo;
+    });
+    setTodos(updatedTodos);
+  }
 
-            return todo
-        })
-
-        setAllTodos(updatedTodos)
-    }
-
-
-
-    const deleteTodo = (id) => {
-        const filteredTodo = allTodos.filter(todo => todo.id !== id)
-        setAllTodos(filteredTodo)
-    }
-
-
-    useEffect(() => {
-        getAllTodos()
-    }, [])
-
-
-    useEffect(() => {
-        localStorage.setItem("todo", JSON.stringify(allTodos))
-    }, [allTodos])
-    
+  function submitEdits(id) {
+    const updatedTodos = [...todos].map((todo) => {
+      if (todo.id === id) {
+        todo.text = editingText;
+      }
+      return todo;
+    });
+    setTodos(updatedTodos);
+    setTodoEditing(null);
+  }
 
   return (
-    <div className="App">
-        <div className="App_todo">
-            <form className="App_input_wrapper" onSubmit={addTodo} >
-                <input type={"text"} className="App_input" value={todo} onChange={(e) => setTodo(e.target.value)} />
-                <div className="App_input_button" onClick={addTodo} >
-                    <TbArrowBarDown size={24} />
-                </div>
-            </form>
+    <div id="todo-list">
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          onChange={(e) => setTodo(e.target.value)}
+          value={todo}
+        />
+        <button type="submit">Add Todo</button>
+      </form>
+      {todos.map((todo) => (
+        <div key={todo.id} className="todo">
+          <div className="todo-text">
+            <input
+              type="checkbox"
+              id="completed"
+              checked={todo.completed}
+              onChange={() => toggleComplete(todo.id)}
+            />
+            {todo.id === todoEditing ? (
+              <input
+                type="text"
+                onChange={(e) => setEditingText(e.target.value)}
+              />
+            ) : (
+              <div>{todo.text}</div>
+            )}
+          </div>
+          <div className="todo-actions">
+            {todo.id === todoEditing ? (
+              <button onClick={() => submitEdits(todo.id)}>Submit Edits</button>
+            ) : (
+              <button onClick={() => setTodoEditing(todo.id)}>Edit</button>
+            )}
 
-            <div className="App_todo_list">
-                {
-                    allTodos.map(todo => (
-                        <Listitem key={todo.id} deleteTodo={() => deleteTodo(todo.id)} text={todo.text} isChecked={todo.isChecked} toggleChecked={() => toggleChecked(todo.id)} />
-                    ))
-                }
-
-                {
-                    allTodos.length === 0 && (
-                        <p className="empty">There are no Todo's</p>
-                    )
-                }
-            </div>
+            <button onClick={() => deleteTodo(todo.id)}>Delete</button>
+            <button onClick={"/"}>Cancel</button>
+          </div>
         </div>
+      ))}
     </div>
-  )
-}
+  );
+};
 
-export default Todo
+export default Todo;
