@@ -30,19 +30,15 @@ function Navbar() {
             <i className={click ? "fas fa-times" : "fas fa-bars"} />
           </div>
           <ul className={click ? "nav-menu active" : "nav-menu"}>
+            
             <li className="nav-item">
-              <Link to="/" className="nav-links" onClick={closeMobileMenu}>
-                Home
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link to="/" className="nav-links" onClick={closeMobileMenu}>
-                About Me
+              <Link to="/pages/CreateTodo" className="nav-links" onClick={closeMobileMenu}>
+                Create ToDo List!
               </Link>
             </li>
           </ul>
           {button && (
-            <Button buttonStyle="btn-outline">Create a ToDo List
+            <Button buttonStyle="btn-outline">Home
             </Button>
           )}
         </div>
