@@ -1,5 +1,6 @@
 import React from "react";
 import "./Todo.css"
+import {useNavigate} from 'react-router-dom';
 
 
 
@@ -8,7 +9,13 @@ const Todo = () => {
   const [todo, setTodo] = React.useState("");
   const [todoEditing, setTodoEditing] = React.useState(null);
   const [editingText, setEditingText] = React.useState("");
+  const navigate = useNavigate();
   
+
+
+  const navigateHome = () => {
+    navigate('/');
+  };
 
   React.useEffect(() => {
     const json = localStorage.getItem("todos");
@@ -69,7 +76,11 @@ const Todo = () => {
           onChange={(e) => setTodo(e.target.value)}
           value={todo}
         />
+        
         <button type="submit">Add Todo</button>
+        <div className="cancel-button">
+        <button onClick={navigateHome}>Cancel</button>
+        </div>
       </form>
       {todos.map((todo) => (
         <div key={todo.id} className="todo">
@@ -80,6 +91,8 @@ const Todo = () => {
               checked={todo.completed}
               onChange={() => toggleComplete(todo.id)}
             />
+
+            
             {todo.id === todoEditing ? (
               <input
                 type="text"
@@ -95,9 +108,7 @@ const Todo = () => {
             ) : (
               <button onClick={() => setTodoEditing(todo.id)}>Edit</button>
             )}
-
             <button onClick={() => deleteTodo(todo.id)}>Delete</button>
-            <button onClick={"/"}>Cancel</button>
           </div>
         </div>
       ))}

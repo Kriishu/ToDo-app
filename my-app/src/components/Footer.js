@@ -9,9 +9,7 @@ function Footer() {
         <div className='footer-link-wrapper'>
           <div class='footer-link-items'>
             <h2>About Me</h2>
-            <Link to='/pages/Contact'>Contact</Link>
             <Link to='https://github.com/Kriishu'>GitHub</Link>
-            <Link to='/pages/Suggestion'>Leave a Suggestion</Link>
           </div>
         </div>
         <div className='footer-link-wrapper'>
@@ -25,9 +23,7 @@ function Footer() {
         <div className='footer-link-wrapper'>
           <div class='footer-link-items'>
             <h2>ToDo</h2>
-            <Link to='/pages/ToDo'>Create ToDo</Link>
-            <Link to='/pages/ToDo'>Edit ToDo</Link>
-            <Link to='/pages/ToDo'>Delete ToDo</Link>
+            <Link to='/pages/CreateTodo'>Create ToDo</Link>
           </div>
         </div>
       </div>
