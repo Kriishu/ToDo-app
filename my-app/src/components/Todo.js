@@ -9,6 +9,7 @@ const Todo = () => {
   const [todo, setTodo] = React.useState("");
   const [todoEditing, setTodoEditing] = React.useState(null);
   const [editingText, setEditingText] = React.useState("");
+  const [editingDesc, setEditingDesc] = React.useState("");
   const navigate = useNavigate();
   const [ date, setDate] = React.useState('');
   const [ desc, setDesc] = React.useState('');
@@ -42,7 +43,7 @@ const Todo = () => {
       text: todo,
       completed: false,
       desc,
-      date,
+      date
     };
     setTodos([...todos].concat(newTodo));
     setTodo("");
@@ -67,8 +68,8 @@ const Todo = () => {
     const updatedTodos = [...todos].map((todo) => {
       if (todo.id === id) {
         todo.text = editingText;
-        todo.desc = editingText;
-        todo.date = editingText;
+        todo.desc = editingDesc;
+       
       }
       return todo;
     });
@@ -79,17 +80,23 @@ const Todo = () => {
   return (
     <div id="todo-list">
       <form onSubmit={handleSubmit}>
-        <p>Task Name:</p>
+        <p>Name:</p>
         <input  
           type="text"
           onChange={(e) => setTodo(e.target.value)}
           value={todo}
         />
-        <p>Task Description:</p>
+        <p>Description:</p>
         <input
           type="text"
           onChange={(e) => setDesc(e.target.value)}
           value={desc}
+        />
+        <p>Date:</p>
+        <input
+          type="date"
+          onChange={(e) => setDate(e.target.value)}
+          value={date}
         />
         <button type="submit">Add Todo</button>
         <div className="cancel-button">
@@ -108,10 +115,12 @@ const Todo = () => {
 
             
             {todo.id === todoEditing ? (
-              <input
-                type="text"
-                onChange={(e) => setEditingText(e.target.value)}
-              />
+              <><input
+            type="text"
+            onChange={(e) => setEditingText(e.target.value)} /><input
+            type="text"
+            onChange={(e) => setEditingDesc(e.target.value)} /></>
+
             ) : (
               <div>
                 <p>Task: {todo.text} </p>
