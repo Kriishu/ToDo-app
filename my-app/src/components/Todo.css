@@ -1,15 +1,17 @@
+
+
 h1 {
     text-align: center;
   }
   #todo-list {
-    width: 750px;
-    margin: 60px auto;
+    width: auto;
+    margin: 70px auto;
     
   }
   form, .todo {
-    border: 1px solid grey;
-    padding: 10px 20px;
-    margin-bottom: 10px;
+    border: 2px solid rgb(0, 0, 0);
+    padding: 20px 20px;
+    margin-bottom: 20px;
   }
   form {
     display: flex;
@@ -19,7 +21,7 @@ h1 {
   form input {
     padding: 4px 8px;
     flex-grow: 1;
-    margin-right: 16px;
+    margin-right: 30px;
   }
   .todo {
     display: flex;

@@ -1,5 +1,5 @@
 import React from "react";
-import "./Todo.css"
+import "./todo.css"
 import {useNavigate} from 'react-router-dom';
 
 
@@ -10,6 +10,10 @@ const Todo = () => {
   const [todoEditing, setTodoEditing] = React.useState(null);
   const [editingText, setEditingText] = React.useState("");
   const navigate = useNavigate();
+  const [ date, setDate] = React.useState('');
+  const [ desc, setDesc] = React.useState('');
+  
+  
   
 
 
@@ -37,6 +41,8 @@ const Todo = () => {
       id: new Date().getTime(),
       text: todo,
       completed: false,
+      desc,
+      date,
     };
     setTodos([...todos].concat(newTodo));
     setTodo("");
@@ -61,6 +67,8 @@ const Todo = () => {
     const updatedTodos = [...todos].map((todo) => {
       if (todo.id === id) {
         todo.text = editingText;
+        todo.desc = editingText;
+        todo.date = editingText;
       }
       return todo;
     });
@@ -71,12 +79,18 @@ const Todo = () => {
   return (
     <div id="todo-list">
       <form onSubmit={handleSubmit}>
-        <input
+        <p>Task Name:</p>
+        <input  
           type="text"
           onChange={(e) => setTodo(e.target.value)}
           value={todo}
         />
-        
+        <p>Task Description:</p>
+        <input
+          type="text"
+          onChange={(e) => setDesc(e.target.value)}
+          value={desc}
+        />
         <button type="submit">Add Todo</button>
         <div className="cancel-button">
         <button onClick={navigateHome}>Cancel</button>
@@ -99,7 +113,12 @@ const Todo = () => {
                 onChange={(e) => setEditingText(e.target.value)}
               />
             ) : (
-              <div>{todo.text}</div>
+              <div>
+                <p>Task: {todo.text} </p>
+                <p>Description: {todo.desc}</p>
+                <p>Date: {todo.date}</p>
+
+              </div>
             )}
           </div>
           <div className="todo-actions">
