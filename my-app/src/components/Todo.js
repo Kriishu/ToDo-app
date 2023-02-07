@@ -43,7 +43,7 @@ const Todo = () => {
       text: todo,
       completed: false,
       desc,
-      date
+      date,
     };
     setTodos([...todos].concat(newTodo));
     setTodo("");
@@ -92,7 +92,7 @@ const Todo = () => {
           onChange={(e) => setDesc(e.target.value)}
           value={desc}
         />
-        <p>Date:</p>
+        <p>Date</p>
         <input
           type="date"
           onChange={(e) => setDate(e.target.value)}

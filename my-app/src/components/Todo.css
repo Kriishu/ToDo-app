@@ -82,3 +82,8 @@ h1 {
     display: flex;
     justify-content: space-between;
   }
+
+
+  .todo-highlighted {
+    background-color: yellow;
+  }
