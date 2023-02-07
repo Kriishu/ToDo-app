@@ -11,8 +11,10 @@ function CreateTodo() {
   return (
 
     <div>
+      
+      <SearchBar/>
         <h1>Here You can Create Your ToDo List:</h1>
-        <SearchBar/>
+        
       <div className='todo-app'>
       <Todo/>
     </div>

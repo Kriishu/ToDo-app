@@ -1,5 +1,5 @@
 import React from "react";
-import "./todo.css"
+import "./Todo.css"
 import {useNavigate} from 'react-router-dom';
 
 
